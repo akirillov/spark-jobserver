@@ -105,7 +105,7 @@ object JobServerBuild extends Build {
   ) aggregate(jobServer, jobServerApi, jobServerTestJar, akkaApp
   ) settings(
     parallelExecution in Test := false,
-    publish      := {},
+    publishArtifact := false,
     concurrentRestrictions := Seq(
       Tags.limit(Tags.CPU, java.lang.Runtime.getRuntime().availableProcessors()),
       // limit to 1 concurrent test task, even across sub-projects
@@ -190,7 +190,7 @@ object JobServerBuild extends Build {
     publishMavenStyle := true,
     publishArtifact in (Compile, packageDoc) := false,
     publishArtifact in Test := false,
-    
+
     credentials += Credentials(
       Option(System.getProperty("nexus.credentials.file"))
         .map(path => Path.absolute(new File(path)))
