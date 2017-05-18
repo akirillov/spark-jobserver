@@ -186,7 +186,7 @@ object JobServerBuild extends Build {
   //simplified release process is used:
   //  - publishing to Nexus only, no versions or tags are commited to the repo
   //  - runTest release step is excluded, tests are executed as a part of assembly
-  lazy val releaseSettings = Seq(
+  lazy val releaseSettings = publishSettings ++ Seq(
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       runClean,
