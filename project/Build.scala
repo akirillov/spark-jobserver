@@ -186,7 +186,24 @@ object JobServerBuild extends Build {
   //simplified release process is used:
   //  - publishing to Nexus only, no versions or tags are commited to the repo
   //  - runTest release step is excluded, tests are executed as a part of assembly
-  lazy val releaseSettings = publishSettings ++ Seq(
+  lazy val releaseSettings = Seq(
+    publishMavenStyle := true,
+    publishArtifact in (Compile, packageDoc) := false,
+    publishArtifact in Test := false,
+    
+    credentials += Credentials(
+      Option(System.getProperty("nexus.credentials.file"))
+        .map(path => Path.absolute(new File(path)))
+        .getOrElse(Path.userHome / ".ivy2" / ".credentials")
+    ),
+
+    // Disallow publishing SNAPSHOTs by returning an empty location if try to publish SNAPSHOTs
+    publishTo <<= (version) { version: String =>
+      val nexus = "http://nexus.ooyala.com/nexus/content/repositories/"
+      if (version.trim.endsWith("SNAPSHOT")) None
+      else                                   Some("releases" at nexus + "releases/")
+    },
+
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       runClean,
