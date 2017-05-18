@@ -302,6 +302,28 @@ Contributions via Github Pull Request are welcome.  See the TODO for some ideas.
 - Run `test` to ensure all tests pass
 - Now just run `publish` and package will be published to bintray
 
+### Releasing packages
+
+To run the full release cycle, [sbt-release plugin](https://github.com/sbt/sbt-release) is used:
+
+```
+sbt release release-version <your_version> next-version <your_next_version> with-defaults
+```
+
+The release process is simplified:
+  - publishing to Nexus only, no versions or tags are committed to the repo
+  - runTest release step is excluded, tests are executed as a part of assembly
+
+
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      runClean,
+      inquireVersions,
+      setReleaseVersion,
+      commitReleaseVersion,
+      publishArtifacts
+    )
+
 ## Contact
 
 For user/dev questions, we are using google group for discussions:
