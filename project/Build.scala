@@ -53,7 +53,7 @@ object JobServerBuild extends Build {
   )
 
   lazy val jobServer = Project(id = "job-server", base = file("job-server"),
-    settings = packagerSettings ++ commonSettings210 ++ Assembly.settings ++
+    settings = packagerSettings ++ commonSettings210 ++ Assembly.settings ++ releaseSettings ++
       packageMappingsSettings("/data/spark/job-server", "spark-job-server") ++ Revolver.settings ++ Seq(
       description := "Spark as a Service: a RESTful job server for Apache Spark",
       libraryDependencies ++= sparkDeps ++ slickDeps ++ monitoringDeps ++ coreTestDeps,
@@ -153,7 +153,7 @@ object JobServerBuild extends Build {
         <exclude module="jmxtools"/>
         <exclude module="jmxri"/>
       </dependencies>
-  ) ++ scalariformPrefs ++ ScalastylePlugin.Settings ++ scoverageSettings ++ publishSettings ++ releaseSettings
+  ) ++ scalariformPrefs ++ ScalastylePlugin.Settings ++ scoverageSettings ++ publishSettings
 
   lazy val scoverageSettings = {
     import ScoverageSbtPlugin._
