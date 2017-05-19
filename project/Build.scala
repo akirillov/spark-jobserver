@@ -53,7 +53,7 @@ object JobServerBuild extends Build {
   )
 
   lazy val jobServer = Project(id = "job-server", base = file("job-server"),
-    settings = packagerSettings ++ commonSettings210 ++ Assembly.settings ++ releaseSettings ++
+    settings = packagerSettings ++ commonSettings210 ++ Assembly.settings ++
       packageMappingsSettings("/data/spark/job-server", "spark-job-server") ++ Revolver.settings ++ Seq(
       description := "Spark as a Service: a RESTful job server for Apache Spark",
       libraryDependencies ++= sparkDeps ++ slickDeps ++ monitoringDeps ++ coreTestDeps,
@@ -112,6 +112,8 @@ object JobServerBuild extends Build {
       // Note: some components of tests seem to have the "Untagged" tag rather than "Test" tag.
       // So, we limit the sum of "Test", "Untagged" tags to 1 concurrent
       Tags.limitSum(1, Tags.Test, Tags.Untagged))
+  ) settings(
+    releaseSettings
   )
 
   // To add an extra jar to the classpath when doing "re-start" for quick development, set the
