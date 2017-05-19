@@ -192,7 +192,8 @@ object JobServerBuild extends Build {
       runClean,
       inquireVersions,
       setReleaseVersion,
-      publishArtifacts
+      publishArtifacts,
+      setNextVersion
     )
   )
 
