@@ -127,7 +127,7 @@ object JobServerBuild extends Build {
 
   lazy val commonSettings210 = Defaults.defaultSettings ++ dirSettings ++ Seq(
     organization := "spark.jobserver",
-    version      := "0.4.1",
+    version      := (version in ThisBuild).value,
     crossPaths   := false,
     scalaVersion := "2.10.4",
     scalaBinaryVersion := "2.10",
@@ -154,7 +154,7 @@ object JobServerBuild extends Build {
         <exclude module="jmxtools"/>
         <exclude module="jmxri"/>
       </dependencies>
-  ) ++ scalariformPrefs ++ ScalastylePlugin.Settings ++ scoverageSettings ++ publishSettings ++ releaseSettings
+  ) ++ scalariformPrefs ++ ScalastylePlugin.Settings ++ scoverageSettings ++ publishSettings
 
   lazy val scoverageSettings = {
     import ScoverageSbtPlugin._
