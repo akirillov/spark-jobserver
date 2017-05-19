@@ -134,7 +134,6 @@ object JobServerBuild extends Build {
     packageOptions := Seq(ManifestAttributes(
       ("SHA", git.gitHeadCommit.value.get)
     )),
-
     runScalaStyle := {
       org.scalastyle.sbt.PluginKeys.scalastyle.toTask("").value
     },
@@ -155,7 +154,7 @@ object JobServerBuild extends Build {
         <exclude module="jmxtools"/>
         <exclude module="jmxri"/>
       </dependencies>
-  ) ++ scalariformPrefs ++ ScalastylePlugin.Settings ++ scoverageSettings ++ publishSettings
+  ) ++ scalariformPrefs ++ ScalastylePlugin.Settings ++ scoverageSettings ++ publishSettings ++ releaseSettings
 
   lazy val scoverageSettings = {
     import ScoverageSbtPlugin._
